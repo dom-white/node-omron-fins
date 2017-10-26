@@ -77,13 +77,17 @@ Memory Area Read Command
 * `callback` - Optional callback method 
 
 ```js
- /* Reads 10 registers starting from register 00000 in the DM Memory Area */
+ /* Reads 10 16bit word registers starting from register 00000 in the DM Memory Area */
 .read('D00000',10);
 
 /* Same as above with callback */
 client.read('D00000',10,function(err,bytes) {
 	console.log("Bytes: ", bytes);
 });
+
+/* Reads 1 bit register from register 00100 at bit 02 in the DM Memory Area */
+.read('D00100.02',1);
+
 ```
 
 ##### .write(address, dataToBeWritten, callback)
@@ -103,6 +107,10 @@ Memory Area Write Command
 .write('D00000',[12,34,56],function(err,bytes) {
 	console.log("Bytes: ", bytes);
 });
+
+/* Writes the values 1,0,1,0 into 4 consecutive bits of DM register 00000, starting at bit 3 */
+.write('D00000.03',[1,0,1,0]);
+
 ```
 
 ##### .fill(address, dataToBeWritten, regsToBeWritten, callback)
@@ -122,6 +130,8 @@ Memory Area Fill Command
 	console.log("Bytes: ", bytes); 
 });
 
+/* Writes 1 into 10 consecutive bits of DM register 00100, starting at bit 0 */
+.fill('D00100.00',1,10);
 
 ```
 
